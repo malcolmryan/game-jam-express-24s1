@@ -35,6 +35,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""44cbbe59-ba20-4720-a58d-f065384c49c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -158,6 +167,28 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""action"": ""move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06a39f8c-6721-4508-b62e-c4c0a4a5045d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ffe114-00d0-4b6c-b751-f589c7978cfe"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -167,6 +198,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         // map
         m_map = asset.FindActionMap("map", throwIfNotFound: true);
         m_map_move = m_map.FindAction("move", throwIfNotFound: true);
+        m_map_jump = m_map.FindAction("jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,11 +261,13 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_map;
     private List<IMapActions> m_MapActionsCallbackInterfaces = new List<IMapActions>();
     private readonly InputAction m_map_move;
+    private readonly InputAction m_map_jump;
     public struct MapActions
     {
         private @Actions m_Wrapper;
         public MapActions(@Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @move => m_Wrapper.m_map_move;
+        public InputAction @jump => m_Wrapper.m_map_jump;
         public InputActionMap Get() { return m_Wrapper.m_map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -246,6 +280,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @move.started += instance.OnMove;
             @move.performed += instance.OnMove;
             @move.canceled += instance.OnMove;
+            @jump.started += instance.OnJump;
+            @jump.performed += instance.OnJump;
+            @jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(IMapActions instance)
@@ -253,6 +290,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @move.started -= instance.OnMove;
             @move.performed -= instance.OnMove;
             @move.canceled -= instance.OnMove;
+            @jump.started -= instance.OnJump;
+            @jump.performed -= instance.OnJump;
+            @jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(IMapActions instance)
@@ -273,5 +313,6 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     public interface IMapActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
