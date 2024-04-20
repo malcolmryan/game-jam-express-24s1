@@ -8,8 +8,9 @@ public class Collectable : MonoBehaviour
     [SerializeField] private AudioSource audioPrefab;
 
     void OnTriggerEnter2D(Collider2D collider) {
-        Instantiate(audioPrefab, transform.position, transform.rotation);
-        Destroy(gameObject);
+        AudioSource a = Instantiate(audioPrefab, transform.position, transform.rotation);
+        Destroy(a.gameObject, a.clip.length);
+        Destroy(gameObject);        
     }
 
 }
