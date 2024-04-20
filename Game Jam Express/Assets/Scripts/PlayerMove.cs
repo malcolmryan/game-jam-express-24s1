@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10;
-    [SerializeField] private float jumpSpeed = 25;
     [SerializeField] private float jumpSpin = 360;
+    [SerializeField] private float jumpHeight = 10;
     [SerializeField] private float restoreSpin = 180;
 
     [SerializeField] private Vector3 groundCheckPoint;
@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTime = 0.1f;
 
+    private float jumpSpeed;
     private Actions actions;
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -31,6 +32,14 @@ public class PlayerMove : MonoBehaviour
 
         rigidbody = GetComponent<Rigidbody2D>();
         jumpAudio = GetComponent<AudioSource>();
+
+        // v^2 = u^2 + 2as
+        // Let v = 0 (velocity at highest point)
+        // u^2 = -2as
+        // u = sqrt(-2as)
+
+        float a = Physics2D.gravity.y * rigidbody.gravityScale;
+        jumpSpeed = Mathf.Sqrt(-2 * a * jumpHeight);
     }
 
     void OnEnable()
@@ -58,7 +67,11 @@ public class PlayerMove : MonoBehaviour
         if (Time.time - wasOnGround < coyoteTime) 
         {
             if (Time.time - wasJumpPressed < coyoteTime) {
-                jumpAudio.Play();
+                wasJumpPressed = float.NegativeInfinity;
+                if (!jumpAudio.isPlaying) 
+                {
+                    jumpAudio.Play();
+                }
                 velocity.y = jumpSpeed;
                 rigidbody.angularVelocity = jumpSpin * move.x;
             }
@@ -74,22 +87,14 @@ public class PlayerMove : MonoBehaviour
         rigidbody.velocity = velocity;
     }
 
-    private void Jump() 
+    private void CheckOnGround() 
     {
-    }
-
-
-    private void CheckOnGround() {
         Vector2 point = transform.position + groundCheckPoint;
         Collider2D collider = Physics2D.OverlapCircle(point, groundCheckRadius, groundLayer); 
         if (collider != null)
         {
             wasOnGround = Time.time;
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D collider) {
-
     }
 
     void OnDrawGizmos() {
