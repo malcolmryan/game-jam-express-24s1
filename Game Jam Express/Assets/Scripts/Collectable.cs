@@ -5,16 +5,11 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
 
-    private AudioSource audio;
-
-    void Start()
-    {
-        audio = GetComponent<AudioSource>();
-    }
+    [SerializeField] private AudioSource audioPrefab;
 
     void OnTriggerEnter2D(Collider2D collider) {
-        audio.Play();
-        Destroy(gameObject, 2);
+        Instantiate(audioPrefab, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
 }
