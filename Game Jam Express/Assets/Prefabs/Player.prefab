@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 8571170527549620759}
   - component: {fileID: 2490491793967121411}
   - component: {fileID: -5988720136254691764}
+  - component: {fileID: 4897441546846995685}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -146,7 +147,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &6874427601862120317
 MonoBehaviour:
@@ -161,14 +162,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  jumpSpeed: 25
   jumpSpin: -360
+  jumpHeight: 10
   restoreSpin: 360
   groundCheckPoint: {x: 0, y: 0, z: 0}
   groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+  coyoteTime: 0.1
 --- !u!81 &8571170527549620759
 AudioListener:
   m_ObjectHideFlags: 0
@@ -308,3 +310,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4897441546846995685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6210549000670524808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99962fb94b40044a6abbb42d982eae7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDuration: 30
+  followerPrefab: {fileID: 1245177800216153386, guid: e0336e7c2de2d4266a60da5dd9995ac6, type: 3}
+  firstFollower: 0.2
+  followerIncrement: 0.1
