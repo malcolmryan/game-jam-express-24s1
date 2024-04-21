@@ -94,10 +94,11 @@ public class PlayerMove : MonoBehaviour
             move.x = butterMove;
         }
 
-        velocity.x = move.x * speed;
 
         if (Time.time - wasOnGround < coyoteTime) 
         {
+            velocity.x = move.x * speed;
+
             if (Time.time - wasJumpPressed < coyoteTime) {
                 wasJumpPressed = float.NegativeInfinity;
                 if (!jumpAudio.isPlaying) 
@@ -111,8 +112,8 @@ public class PlayerMove : MonoBehaviour
             if (velocity.y <= 0) {
                 // add force to return to upright
                 float angle = transform.localEulerAngles.z;
-                angle = (angle + 180) % 360 - 180;  // in range -180 to 180
-                rigidbody.angularVelocity = -restoreSpin * angle / 180;
+                //angle = (angle + 180) % 360 - 180;  // in range -180 to 180
+                rigidbody.angularVelocity = -restoreSpin * angle / 360;
             }
         }
 
