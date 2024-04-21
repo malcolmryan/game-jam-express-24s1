@@ -330,10 +330,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5988720136254691764, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6210549000670524808, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -355,6 +351,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
       propertyPath: jamCurve.m_Curve.Array.data[1].time
       value: 1
       objectReference: {fileID: 0}
@@ -367,24 +367,44 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
-      propertyPath: jamCurve.m_Curve.Array.data[0].inSlope
-      value: 0
+      propertyPath: butterCurve.m_Curve.Array.data[1].time
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
       propertyPath: jamCurve.m_Curve.Array.data[1].inSlope
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
-      propertyPath: jamCurve.m_Curve.Array.data[0].outSlope
-      value: 0
+      propertyPath: butterCurve.m_Curve.Array.data[0].value
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
-      propertyPath: jamCurve.m_Curve.Array.data[1].inWeight
-      value: 0
+      propertyPath: butterCurve.m_Curve.Array.data[1].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
       propertyPath: jamCurve.m_Curve.Array.data[1].outSlope
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.data[0].inSlope
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.data[0].outSlope
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874427601862120317, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
+      propertyPath: butterCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7715643700226205374, guid: 01b15c9ae794b4db5b3cb0d63511077c, type: 3}
       propertyPath: m_LocalScale.x

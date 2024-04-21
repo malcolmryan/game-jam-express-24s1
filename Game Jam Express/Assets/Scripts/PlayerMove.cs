@@ -25,6 +25,9 @@ public class PlayerMove : MonoBehaviour
     private float wasJumpPressed = float.NegativeInfinity;
 
     private float butterTimer = 0;
+    private float butterDuration = 0;
+    private float butterMove = 0;
+    [SerializeField] private AnimationCurve butterCurve;
     private float jamTimer = 0;
     private float jamDuration = 0;
     [SerializeField] private AnimationCurve jamCurve;
@@ -86,18 +89,12 @@ public class PlayerMove : MonoBehaviour
 
         if (butterTimer > 0) 
         {
-            // you can't slow down or turn while buttered
-            float sign = Mathf.Sign(velocity.x);
-            float mx = move.x * speed * sign;
-            float vx = velocity.x * sign;
-            vx = Mathf.Max(vx, mx) * sign;;
-            velocity.x = vx;
-        }
-        else {
-            velocity.x = move.x * speed;
+            float t = butterCurve.Evaluate(1 - butterTimer / butterDuration);
+            speed *= t;
+            move.x = butterMove;
         }
 
-
+        velocity.x = move.x * speed;
 
         if (Time.time - wasOnGround < coyoteTime) 
         {
@@ -138,6 +135,8 @@ public class PlayerMove : MonoBehaviour
         {
             case SpreadHazard.Spread.BUTTER:
                 butterTimer = duration;
+                butterDuration = duration;
+                butterMove = Mathf.Sign(rigidbody.velocity.x);
                 break;
             case SpreadHazard.Spread.JAM:
                 jamTimer = duration;
