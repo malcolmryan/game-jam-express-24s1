@@ -24,6 +24,11 @@ public class PlayerMove : MonoBehaviour
     private float wasOnGround = float.NegativeInfinity;
     private float wasJumpPressed = float.NegativeInfinity;
 
+    private float butterTimer = 0;
+    private float jamTimer = 0;
+    private float jamDuration = 0;
+    [SerializeField] private AnimationCurve jamCurve;
+
     void Awake()
     {
         actions = new Actions();
@@ -56,13 +61,43 @@ public class PlayerMove : MonoBehaviour
     {
         CheckOnGround();
 
+        if (butterTimer > 0) 
+        {
+            butterTimer -= Time.deltaTime;
+        }
+        if (jamTimer > 0) 
+        {
+            jamTimer -= Time.deltaTime;
+        }
+
         if (jumpAction.WasPerformedThisFrame()) {
             wasJumpPressed = Time.time;
         }
 
         Vector2 move = moveAction.ReadValue<Vector2>();
         Vector3 velocity = rigidbody.velocity;
-        velocity.x = move.x * moveSpeed;
+        float speed = moveSpeed;
+
+        if (jamTimer > 0) 
+        {
+            float t = jamCurve.Evaluate(1 - jamTimer / jamDuration);
+            speed *= t;
+        }
+
+        if (butterTimer > 0) 
+        {
+            // you can't slow down or turn while buttered
+            float sign = Mathf.Sign(velocity.x);
+            float mx = move.x * speed * sign;
+            float vx = velocity.x * sign;
+            vx = Mathf.Max(vx, mx) * sign;;
+            velocity.x = vx;
+        }
+        else {
+            velocity.x = move.x * speed;
+        }
+
+
 
         if (Time.time - wasOnGround < coyoteTime) 
         {
@@ -94,6 +129,20 @@ public class PlayerMove : MonoBehaviour
         if (collider != null)
         {
             wasOnGround = Time.time;
+        }
+    }
+
+    public void AddSpread(SpreadHazard.Spread spread, float duration) 
+    {
+        switch (spread)
+        {
+            case SpreadHazard.Spread.BUTTER:
+                butterTimer = duration;
+                break;
+            case SpreadHazard.Spread.JAM:
+                jamTimer = duration;
+                jamDuration = duration;
+                break;
         }
     }
 
