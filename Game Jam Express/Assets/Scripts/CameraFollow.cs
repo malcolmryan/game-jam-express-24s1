@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate()
     {
         Vector3 position = transform.position;
-        position.x = target.position.x;
+        position.x = Mathf.Max(target.position.x, transform.position.x);
         transform.position = position;        
     }
 }
